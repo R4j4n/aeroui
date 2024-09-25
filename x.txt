@@ -1,0 +1,52 @@
+        <div ref={cardRef} className="relative h-96">
+          {/* Background (Border Image) */}
+          <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url(${bgImage})` }}></div>
+
+          {/* Foreground (Actual Image) */}
+          <div className="absolute inset-0 m-3 bg-cover bg-center" style={{ backgroundImage: `url(${fgImage})` }}></div>
+
+          {/* Invitation Text */}
+          <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
+            <div className="text-white text-center">
+              <h2 className="text-3xl font-bold">You're Invited!</h2>
+              <p className="text-lg mt-2">Join us for {invitationDetails.event || 'a fun-filled event!'}</p>
+              <p className="mt-4">Date: {invitationDetails.date || 'MM/DD/YYYY'}</p>
+              <p className="mt-1">Check-In Time: {invitationDetails.checkInTime || 'HH:MM AM/PM'}</p>
+              <p className="mt-1">End Time: {invitationDetails.endTime || 'HH:MM AM/PM'}</p>
+              <p className="mt-4">{invitationDetails.address || 'Sky Zone Anaheim'}</p>
+              <p className="mt-4">
+                Please RSVP by contacting {invitationDetails.name || 'Your Name'} at{' '}
+                {invitationDetails.phoneNumber || '555-555-5555'} or {invitationDetails.email || 'email@example.com'}.
+              </p>
+            </div>
+          </div>
+        </div>
+
+
+
+
+      <div className="w-1/2 border p-6 rounded-lg shadow-lg">
+      <div ref={cardRef} className="relative h-96">
+          {/* Background (Border Image) */}
+          <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url(${bgImage})` }}></div>
+
+          {/* Foreground (Actual Image) */}
+          <div className="absolute inset-0 m-3 bg-cover bg-center" style={{ backgroundImage: `url(${fgImage})` }}></div>
+
+          {/* Invitation Text */}
+          <div className="absolute inset-0 bg-black bg-opacity-40 flex items-center justify-center">
+            <div className="text-white text-center">
+              <h2 className="text-3xl font-bold">You're Invited!</h2>
+              <p className="text-lg mt-2">Join us for {invitationDetails.event || 'a fun-filled event!'}</p>
+              <p className="mt-4">Date: {invitationDetails.date || 'MM/DD/YYYY'}</p>
+              <p className="mt-1">Check-In Time: {invitationDetails.checkInTime || 'HH:MM AM/PM'}</p>
+              <p className="mt-1">End Time: {invitationDetails.endTime || 'HH:MM AM/PM'}</p>
+              <p className="mt-4">{invitationDetails.address || 'Sky Zone Anaheim'}</p>
+              <p className="mt-4">
+                Please RSVP by contacting {invitationDetails.name || 'Your Name'} at{' '}
+                {invitationDetails.phoneNumber || '555-555-5555'} or {invitationDetails.email || 'email@example.com'}.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
