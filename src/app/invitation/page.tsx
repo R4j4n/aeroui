@@ -1,9 +1,10 @@
 "use client";
 
 import React, { useState, useRef } from 'react';
-import html2canvas from 'html2canvas';
-import { saveAs } from 'file-saver';
+import html2canvas from 'html2canvas-pro';
 import Image from 'next/image';
+import { callbackify } from 'util';
+const fileSaver = require('file-saver');
 
 const InvitationCard = () => {
   const cardRef = useRef(null); // Reference to the card container
@@ -25,6 +26,7 @@ const InvitationCard = () => {
 
   const [invitationDetails, setInvitationDetails] = useState({
     name: '',
+    lastName:'',
     address: '',
     date: '',
     time: '',
@@ -51,7 +53,7 @@ const InvitationCard = () => {
           scale: 2, // Increase quality
         });
         canvas.toBlob((blob) => {
-          saveAs(blob, 'invitation_card.png');
+          fileSaver.saveAs(blob, 'invitation_card.png');
         });
       } catch (error) {
         console.error('Error generating image:', error);
@@ -201,7 +203,7 @@ const InvitationCard = () => {
               <p className="mt-4">Date: {invitationDetails.date || 'MM/DD/YYYY'}</p>
               <p className="mt-1">Check-In Time: {invitationDetails.checkInTime || 'HH:MM AM/PM'}</p>
               <p className="mt-1">End Time: {invitationDetails.endTime || 'HH:MM AM/PM'}</p>
-              <p className="mt-4">{invitationDetails.address || 'Aerosports Tramplone Park'}</p>
+              <p className="mt-4">{invitationDetails.address || 'Aerosports Trampoline Park'}</p>
               <p className="mt-4">
                 Please RSVP by contacting {invitationDetails.name} {invitationDetails.lastName ? ` ${invitationDetails.lastName}` : ''} at{' '}
                 {invitationDetails.phoneNumber || '555-555-5555'} or {invitationDetails.email || 'email@example.com'}.
@@ -211,7 +213,7 @@ const InvitationCard = () => {
           </div>
         </div>
       <button 
-        onClick={handleDownload}
+        onClick={() => handleDownload()}
         className="mt-4 px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 transition-colors"
       >
         Download Invitation
