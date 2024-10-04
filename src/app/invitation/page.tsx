@@ -3,7 +3,8 @@
 import React, { useState, useRef } from 'react';
 import html2canvas from 'html2canvas-pro';
 import Image from 'next/image';
-import { callbackify } from 'util';
+import Picker from 'vanilla-picker';
+import DatePicker from 'react-datepicker'
 const fileSaver = require('file-saver');
 
 const InvitationCard = () => {
@@ -13,12 +14,19 @@ const InvitationCard = () => {
     '/background1.jpg',  // Add border/background images to the public folder
     '/background2.jpg',
     '/background3.jpg',
+    '/background4.png',
+    '/background5.png',
+    '/background6.png'
   ];
 
   const foregrounds = [
     '/foreground1.jpg',  // Add actual images (foreground) to the public folder
     '/foreground2.jpg',
     '/foreground3.jpg',
+    '/foreground4.png',
+    '/foreground5.png',
+    '/foreground6.png',
+    '/foreground7.png',
   ];
 
   const [bgImage, setBgImage] = useState(backgrounds[0]);
@@ -61,12 +69,48 @@ const InvitationCard = () => {
     }
   };
 
+  //rounds time to nearest 15 minutes
+  const roundTime = (x) => {
+    try {
+      var round = 15;
+      var minute = x.toString().substring(3);
+      var rounded = Math.round(parseInt(minute) / round) * round;
+      return x.toString().substring(0,3) + rounded;   
+    }
+    catch(e) {
+      return ('HH:MM AM/PM');
+    }
+  }
+
+  //function to change month to text format when displaying
+  const dateFormat = () => {
+    try {
+      var date = new Date(invitationDetails.date);
+      date.setDate(date.getDate() + 1);
+      var newDateFormat = new Intl.DateTimeFormat("en-US", {
+        year: "numeric",
+        month: "long",
+        day: "numeric"
+      }).format(date);
+      return newDateFormat;
+    }
+    catch (err) {
+      return('MM/DD/YY');
+    }
+  };
+
   return (
     <div className="flex flex-col md:flex-row justify-between p-10 space-y-8 md:space-y-0 md:space-x-8">
       {/* Left Side: Input Fields */}
       <div className="w-full md:w-3/5 ml-10">
         <h1 className="text-xl font-bold mb-4">Invitation Generator</h1>
-
+        {/*Text Color Selector */}
+        <div>
+          <h3 className="text-lg font-medium mb-2" id = 'textColorButton'>Select a text color</h3>
+          <div className = "flex space-x-4 mb-6">
+            
+          </div>
+        </div>
         {/* Background Selector */}
         <div>
           <h3 className="text-lg font-medium mb-2">Select a border (background):</h3>
@@ -191,18 +235,17 @@ const InvitationCard = () => {
           <div className="absolute inset-0 bg-cover bg-center" style={{ backgroundImage: `url(${bgImage})` }}></div>
 
           {/* Foreground (Actual Image) */}
-          <div className="absolute inset-0 m-4 bg-cover bg-center" style={{ backgroundImage: `url(${fgImage})` }}></div>
+          <div className="absolute inset-0 m-6 bg-cover bg-center" style={{ backgroundImage: `url(${fgImage})` }}></div>
 
           {/* Invitation Text */}
           <div className="absolute inset-0 flex items-center justify-center">
-            <div className="text-white text-center">
+            <div className="text-white text-center" id = 'displayTextColor'>
                 <div className='mt-20'>
-              <h2 className="text-white text-3xl font-bold">You're Invited!</h2>
-              
+              <h2 className="text-white text-3xl font-bold" id = 'displayTextColor'>You're Invited!</h2>
               <p className="text-lg mt-2">Join us for {invitationDetails.event || 'a fun-filled event!'}</p>
-              <p className="mt-4">Date: {invitationDetails.date || 'MM/DD/YYYY'}</p>
-              <p className="mt-1">Check-In Time: {invitationDetails.checkInTime || 'HH:MM AM/PM'}</p>
-              <p className="mt-1">End Time: {invitationDetails.endTime || 'HH:MM AM/PM'}</p>
+              <p className="mt-4">Date: {dateFormat() || 'MM/DD/YYYY'}</p>
+              <p className="mt-1">Check-In Time: {roundTime(invitationDetails.checkInTime)|| 'HH:MM AM/PM'}</p>
+              <p className="mt-1">End Time: {roundTime(invitationDetails.endTime) || 'HH:MM AM/PM'}</p>
               <p className="mt-4">{invitationDetails.address || 'Aerosports Trampoline Park'}</p>
               <p className="mt-4">
                 Please RSVP by contacting {invitationDetails.name} {invitationDetails.lastName ? ` ${invitationDetails.lastName}` : ''} at{' '}
