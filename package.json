@@ -9,14 +9,17 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@melloware/coloris": "^0.24.0",
     "file-saver": "^2.0.5",
     "html2canvas": "^1.4.1",
     "html2canvas-pro": "^1.5.8",
     "lucide-react": "^0.446.0",
     "next": "14.2.13",
+    "purejs-color-picker": "^1.0.2",
     "react": "^18",
     "react-datepicker": "^7.4.0",
     "react-dom": "^18",
+    "react-pick-color": "^2.0.0",
     "vanilla-picker": "^2.12.3"
   },
   "devDependencies": {

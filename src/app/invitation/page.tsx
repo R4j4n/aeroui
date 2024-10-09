@@ -6,6 +6,7 @@ import Image from 'next/image';
 import Picker from 'vanilla-picker';
 import DatePicker from 'react-datepicker'
 const fileSaver = require('file-saver');
+import ColorPicker from 'react-pick-color';
 
 const InvitationCard = () => {
   const cardRef = useRef(null); // Reference to the card container
@@ -75,7 +76,15 @@ const InvitationCard = () => {
       var round = 15;
       var minute = x.toString().substring(3);
       var rounded = Math.round(parseInt(minute) / round) * round;
-      return x.toString().substring(0,3) + rounded;   
+      if (rounded == 0) {
+        return x.toString().substring(0,3) + "00";
+      }
+      else if (Number.isNaN(rounded)) {
+        return "TBD";
+      }
+      else {
+        return x.toString().substring(0,3) + rounded;
+      }   
     }
     catch(e) {
       return ('HH:MM AM/PM');
@@ -99,6 +108,18 @@ const InvitationCard = () => {
     }
   };
 
+
+  /*const colorPick = () => {
+    var color = document.getElementById("colorInput");
+    var r = ReactDOM.querySelector('#displayTextColor');
+    var theColor;
+    color.addEventListener("input", function(){
+      theColor = color.value;
+      pagetsx.getElementById("displayTextColor").style.color = theColor;
+    },false)
+    return theColor;
+  };*/
+
   return (
     <div className="flex flex-col md:flex-row justify-between p-10 space-y-8 md:space-y-0 md:space-x-8">
       {/* Left Side: Input Fields */}
@@ -106,10 +127,10 @@ const InvitationCard = () => {
         <h1 className="text-xl font-bold mb-4">Invitation Generator</h1>
         {/*Text Color Selector */}
         <div>
-          <h3 className="text-lg font-medium mb-2" id = 'textColorButton'>Select a text color</h3>
-          <div className = "flex space-x-4 mb-6">
-            
-          </div>
+          {/*<h3 className="text-lg font-medium mb-2" id = 'textColorButton'>Select a text color:</h3>
+          /* <form>
+            <input type='color' id = 'colorInput'></input>
+          </form>*/}
         </div>
         {/* Background Selector */}
         <div>
