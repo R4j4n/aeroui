@@ -273,11 +273,15 @@ const InvitationCard = () => {
 
           {/* Foreground (Actual Image) */}
           <div className="absolute inset-0 m-6 bg-cover bg-center" style={{ backgroundImage: `url(${fgImage})` }}></div>
-
+          
+          {/*Aerosports logo*/}
+          <div className="object-none object-right-top w-24 h-24 border-4" style={{ backgroundImage: `url(/aerosportslogo.png)` }}></div>
+          
           {/* Invitation Text */}
-          <div className="absolute inset-0 flex items-center justify-center">
+          <div className="absolute inset-x-0 top-12 flex items-center justify-center">
             <div className="text-white text-center" id = 'displayTextColor'>
                 <div className='mt-20'>
+                <img title="object-right-top" className="absolute top-0 right-8 w-13 h-10" src= "/aerosportslogo.png"/>
               <h2 className="text-white text-3xl font-bold" id = 'displayTextColor'>You're Invited!</h2>
               <p className="text-lg mt-2">Join us for {invitationDetails.event || 'a fun-filled event!'}</p>
               <p className="mt-4">Date: {dateFormat() || 'MM/DD/YYYY'}</p>
