@@ -213,7 +213,7 @@ const InvitationCard = () => {
                   <option value="pm">pm</option>
                 </select>
             </div>
-            <div>
+            {/*<div>
               <label className="block text-sm font-medium text-gray-700">Length of Event</label>
               <input
                 placeholder = 'in hours'
@@ -223,7 +223,7 @@ const InvitationCard = () => {
                 onChange={handleChange}
                 className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
               />
-            </div>
+            </div>*/}
           </div>
           <div>
             <label className="block text-sm font-medium text-gray-700">Who should people contact to RSVP?</label>
@@ -286,7 +286,7 @@ const InvitationCard = () => {
               <p className="text-lg mt-2">Join us for {invitationDetails.event || 'a fun-filled event!'}</p>
               <p className="mt-4">Date: {dateFormat() || 'MM/DD/YYYY'}</p>
               <p className="mt-1">Check-In Time: {`${checkInTime.hour}:${checkInTime.minute} ${checkInTime.m}`}</p>
-              <p className="mt-1">End Time: {invitationDetails.length + ' hours' || '__ hours'}</p>
+              <p className="mt-1">End Time: {'2 hours'}</p>
               <p className="mt-4">{invitationDetails.address || 'Aerosports Trampoline Park'}</p>
               <p className="mt-4">
                 Please RSVP by contacting {invitationDetails.name} {invitationDetails.lastName ? ` ${invitationDetails.lastName}` : ''} at{' '}
