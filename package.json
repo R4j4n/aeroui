@@ -18,6 +18,7 @@
     "purejs-color-picker": "^1.0.2",
     "react": "^18",
     "react-datepicker": "^7.4.0",
+    "react-datetime": "^3.2.0",
     "react-dom": "^18",
     "react-pick-color": "^2.0.0",
     "vanilla-picker": "^2.12.3"

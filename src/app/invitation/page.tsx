@@ -7,6 +7,8 @@ import Picker from 'vanilla-picker';
 import DatePicker from 'react-datepicker'
 const fileSaver = require('file-saver');
 import ColorPicker from 'react-pick-color';
+import { relativeTimeRounding } from 'moment';
+import { text } from 'stream/consumers';
 
 const InvitationCard = () => {
   const cardRef = useRef(null); // Reference to the card container
@@ -41,7 +43,7 @@ const InvitationCard = () => {
     time: '',
     event: '',
     checkInTime: '',
-    endTime: '',
+    length: '',
     phoneNumber: '',
     email: '',
   });
@@ -68,6 +70,21 @@ const InvitationCard = () => {
         console.error('Error generating image:', error);
       }
     }
+  };
+
+  const [checkInTime, setCheckInTime] = useState({
+    hour: '00',
+    minute:'00',
+    m: 'am'
+  })
+
+  var formattedTime;
+  const handleTimeChange = (e) => {
+    const { name, value } = e.target;
+    setCheckInTime({
+      ...checkInTime,
+      [name]: value,
+    });
   };
 
   //rounds time to nearest 15 minutes
@@ -108,30 +125,11 @@ const InvitationCard = () => {
     }
   };
 
-
-  /*const colorPick = () => {
-    var color = document.getElementById("colorInput");
-    var r = ReactDOM.querySelector('#displayTextColor');
-    var theColor;
-    color.addEventListener("input", function(){
-      theColor = color.value;
-      pagetsx.getElementById("displayTextColor").style.color = theColor;
-    },false)
-    return theColor;
-  };*/
-
   return (
     <div className="flex flex-col md:flex-row justify-between p-10 space-y-8 md:space-y-0 md:space-x-8">
       {/* Left Side: Input Fields */}
       <div className="w-full md:w-3/5 ml-10">
         <h1 className="text-xl font-bold mb-4">Invitation Generator</h1>
-        {/*Text Color Selector */}
-        <div>
-          {/*<h3 className="text-lg font-medium mb-2" id = 'textColorButton'>Select a text color:</h3>
-          /* <form>
-            <input type='color' id = 'colorInput'></input>
-          </form>*/}
-        </div>
         {/* Background Selector */}
         <div>
           <h3 className="text-lg font-medium mb-2">Select a border (background):</h3>
@@ -188,20 +186,40 @@ const InvitationCard = () => {
             </div>
             <div>
               <label className="block text-sm font-medium text-gray-700">Check-In Time</label>
-              <input
-                type="time"
-                name="checkInTime"
-                value={invitationDetails.checkInTime}
-                onChange={handleChange}
-                className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
-              />
+                <select className = "text-2xl" name="hour" id="hour" value={checkInTime.hour} onChange={handleTimeChange}>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                  <option value="8">8</option>
+                  <option value="9">9</option>
+                  <option value="10">10</option>
+                  <option value="11">11</option>
+                  <option value="12">12</option>
+                </select>
+
+                <select className = "text-2xl mt-3" name="minute" id="minute" value={checkInTime.minute} onChange={handleTimeChange}>
+                  <option value="00">00</option>
+                  <option value="15">15</option>
+                  <option value="30">30</option>
+                  <option value="45">45</option>
+                </select>
+
+                <select className = "text-2xl mt-3" name="m" id="m" value={checkInTime.m} onChange={handleTimeChange}>
+                  <option value="am">am</option>
+                  <option value="pm">pm</option>
+                </select>
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-700">End Time</label>
+              <label className="block text-sm font-medium text-gray-700">Length of Event</label>
               <input
-                type="time"
-                name="endTime"
-                value={invitationDetails.endTime}
+                placeholder = 'in hours'
+                type="text"
+                name="length"
+                value={invitationDetails.length}
                 onChange={handleChange}
                 className="mt-1 block w-full p-2 border border-gray-300 rounded-md"
               />
@@ -245,8 +263,6 @@ const InvitationCard = () => {
             />
           </div>
         </form>
-
-
       </div>
 
       {/* Right Side: Generated Invitation */}
@@ -265,8 +281,8 @@ const InvitationCard = () => {
               <h2 className="text-white text-3xl font-bold" id = 'displayTextColor'>You're Invited!</h2>
               <p className="text-lg mt-2">Join us for {invitationDetails.event || 'a fun-filled event!'}</p>
               <p className="mt-4">Date: {dateFormat() || 'MM/DD/YYYY'}</p>
-              <p className="mt-1">Check-In Time: {roundTime(invitationDetails.checkInTime)|| 'HH:MM AM/PM'}</p>
-              <p className="mt-1">End Time: {roundTime(invitationDetails.endTime) || 'HH:MM AM/PM'}</p>
+              <p className="mt-1">Check-In Time: {`${checkInTime.hour}:${checkInTime.minute} ${checkInTime.m}`}</p>
+              <p className="mt-1">End Time: {invitationDetails.length + ' hours' || '__ hours'}</p>
               <p className="mt-4">{invitationDetails.address || 'Aerosports Trampoline Park'}</p>
               <p className="mt-4">
                 Please RSVP by contacting {invitationDetails.name} {invitationDetails.lastName ? ` ${invitationDetails.lastName}` : ''} at{' '}
@@ -286,5 +302,4 @@ const InvitationCard = () => {
     </div>
   );
 };
-
 export default InvitationCard;
