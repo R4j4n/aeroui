@@ -30,7 +30,12 @@ const InvitationCard = () => {
     '/foreground5.png',
     '/foreground6.png',
     '/foreground7.png',
-  ];
+    '/foreground8.png',
+    '/foreground9.png',
+    '/foreground10.png',
+    '/foreground11.png',
+    '/foreground12.png',
+  ]
 
   const [bgImage, setBgImage] = useState(backgrounds[0]);
   const [fgImage, setFgImage] = useState(foregrounds[0]);
