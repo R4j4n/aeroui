@@ -125,6 +125,32 @@ const InvitationCard = () => {
     }
   };
 
+  const calculateEndTime = (hour, minute, period) => {
+    let hours = parseInt(hour);
+    let minutes = parseInt(minute);
+    
+    // Convert to 24-hour format
+    if (period === "pm" && hours !== 12) {
+      hours += 12;
+    } else if (period === "am" && hours === 12) {
+      hours = 0; // Midnight case
+    }
+  
+    // Add 2 hours
+    hours += 2;
+  
+    // If hours exceed 24, reset (e.g. 25:00 -> 1:00)
+    if (hours >= 24) {
+      hours = hours - 24;
+    }
+  
+    // Convert back to 12-hour format
+    let newPeriod = hours >= 12 ? "pm" : "am";
+    hours = hours % 12 || 12; // Convert 0 to 12 for 12 AM/PM case
+  
+    return `${hours.toString().padStart(2, '0')}:${minute} ${newPeriod}`;
+  };
+  
   return (
     <div className="flex flex-col md:flex-row justify-between p-10 space-y-8 md:space-y-0 md:space-x-8">
       {/* Left Side: Input Fields */}
@@ -281,12 +307,12 @@ const InvitationCard = () => {
           <div className="absolute inset-x-0 top-12 flex items-center justify-center">
             <div className="text-white text-center" id = 'displayTextColor'>
                 <div className='mt-20'>
-                <img title="object-right-top" className="absolute top-0 right-8 w-13 h-10" src= "/aerosportslogo.png"/>
+                {/* <img title="object-right-top" className="absolute top-0 right-8 w-13 h-10" src= "/aerosportslogo.png"/> */}
               <h2 className="text-white text-3xl font-bold" id = 'displayTextColor'>You're Invited!</h2>
               <p className="text-lg mt-2">Join us for {invitationDetails.event || 'a fun-filled event!'}</p>
               <p className="mt-4">Date: {dateFormat() || 'MM/DD/YYYY'}</p>
               <p className="mt-1">Check-In Time: {`${checkInTime.hour}:${checkInTime.minute} ${checkInTime.m}`}</p>
-              <p className="mt-1">End Time: {'2 hours'}</p>
+              <p className="mt-1">End Time: {calculateEndTime(checkInTime.hour, checkInTime.minute, checkInTime.m)}</p>
               <p className="mt-4">{invitationDetails.address || 'Aerosports Trampoline Park'}</p>
               <p className="mt-4">
                 Please RSVP by contacting {invitationDetails.name} {invitationDetails.lastName ? ` ${invitationDetails.lastName}` : ''} at{' '}
